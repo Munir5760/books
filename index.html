@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovelNest | Discover & Order Your Favorite Books</title>
+  <!-- FontAwesome for Premium Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ================= STORE VIEW ================= -->
+  <div id="store-view" class="view active">
+    <!-- Header -->
+    <header>
+      <div class="navbar">
+        <a href="#" class="logo">
+          <i class="fa-solid fa-book-open-reader"></i> NovelNest
+        </a>
+        <div class="search-container">
+          <i class="fa-solid fa-magnifying-glass search-icon"></i>
+          <input type="text" id="search-input" class="search-input" placeholder="Search books by title or author...">
+        </div>
+        <div class="nav-actions">
+          <!-- Auth section -->
+          <div id="guest-auth-block">
+            <button id="go-login-btn" class="nav-btn nav-btn-primary">
+              <i class="fa-solid fa-right-to-bracket"></i> Login
+            </button>
+          </div>
+          <div id="user-auth-block" class="nav-auth-info" style="display: none;">
+            <span class="user-welcome">Hi, <span id="user-display-name">Munir</span></span>
+            <span class="user-badge">Customer</span>
+            <button id="store-logout-btn" class="nav-btn">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+          </div>
+
+          <button id="cart-btn" class="cart-trigger" aria-label="Shopping Cart">
+            <div class="cart-icon-wrapper">
+              <i class="fa-solid fa-bag-shopping"></i>
+              <span id="cart-count" class="cart-count">0</span>
+            </div>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-banner">
+        <h1>Discover Your Next <span>Great Read</span></h1>
+        <p>Explore our carefully curated collection of bestsellers and essential reads. Order today with instant Mobile Money or Bank Transfer payments.</p>
+      </div>
+    </section>
+
+    <!-- Category Filter Bar -->
+    <nav class="categories-bar" id="categories-bar">
+      <button class="category-btn active" data-category="all">All Books</button>
+      <button class="category-btn" data-category="fiction">Fiction & Literature</button>
+      <button class="category-btn" data-category="tech">Technology</button>
+      <button class="category-btn" data-category="business">Business & Finance</button>
+      <button class="category-btn" data-category="self-help">Self-Improvement</button>
+    </nav>
+
+    <!-- Main Content (Books Grid) -->
+    <main class="main-content">
+      <div class="section-header">
+        <h2 id="current-category-title" class="section-title">All Books</h2>
+        <span id="books-count" class="books-count">0 books found</span>
+      </div>
+      <div class="books-grid" id="books-grid">
+        <!-- Dynamic Book Cards injected here -->
+      </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <span class="footer-logo"><i class="fa-solid fa-book-open-reader"></i> NovelNest</span>
+        <p class="footer-text">&copy; 2026 NovelNest. Beautifully designed for reading enthusiasts. Built with Montserrat.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ================= LOGIN VIEW ================= -->
+  <div id="login-view" class="view">
+    <section class="login-section">
+      <div class="login-card">
+        <div class="logo" style="justify-content: center; margin-bottom: 1.5rem; font-size: 1.75rem;">
+          <i class="fa-solid fa-book-open-reader"></i> NovelNest
+        </div>
+        <h2 class="login-title">Welcome Back</h2>
+        <p class="login-subtitle">Log in to manage orders or access the catalog</p>
+        
+        <form id="login-form">
+          <div class="form-group">
+            <label for="login-username">Username</label>
+            <input type="text" id="login-username" class="form-control" placeholder="Enter username" required>
+          </div>
+          <div class="form-group" style="margin-bottom: 1.5rem;">
+            <label for="login-password">Password</label>
+            <input type="password" id="login-password" class="form-control" placeholder="Enter password" required>
+          </div>
+          <button type="submit" class="login-btn">Log In</button>
+        </form>
+
+        <div class="login-back-btn">
+          <a id="login-back-to-store" class="login-back-link">
+            <i class="fa-solid fa-arrow-left"></i> Back to Bookstore
+          </a>
+        </div>
+
+        <div class="login-credentials-tip">
+          <p><strong>Demo Accounts:</strong></p>
+          <p style="margin-top: 0.25rem;">• Admin: <strong>admin</strong> / <strong>admin123</strong></p>
+          <p>• Customer: <strong>user</strong> / <strong>user123</strong></p>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ================= ADMIN VIEW ================= -->
+  <div id="admin-view" class="view">
+    <!-- Admin Header -->
+    <header class="admin-navbar">
+      <div class="navbar">
+        <span class="logo">
+          <i class="fa-solid fa-gears"></i> NovelNest Admin
+        </span>
+        <div class="nav-actions">
+          <div class="nav-auth-info">
+            <span class="user-welcome" style="color: #f1f5f9;">Hi, Admin</span>
+            <span class="user-badge" style="background-color: rgba(236, 72, 153, 0.1); color: #f472b6;">System Admin</span>
+            <button id="admin-logout-btn" class="nav-btn">
+              <i class="fa-solid fa-right-from-bracket"></i> Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Admin Dashboard Container -->
+    <main class="admin-container">
+      <div class="admin-header-row">
+        <div class="admin-title-group">
+          <h1>Inventory Management</h1>
+          <p>Monitor book stock details, add new editions, or edit availability</p>
+        </div>
+        <button id="admin-add-book-trigger" class="nav-btn nav-btn-primary" style="padding: 0.75rem 1.5rem; border-radius: var(--radius-md);">
+          <i class="fa-solid fa-plus"></i> Add New Book
+        </button>
+      </div>
+
+      <!-- Metrics Panel -->
+      <section class="admin-metrics">
+        <div class="metric-card">
+          <div class="metric-info">
+            <h3>Total Books</h3>
+            <span id="metric-total-books" class="metric-val">0</span>
+          </div>
+          <div class="metric-icon">
+            <i class="fa-solid fa-book"></i>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-info">
+            <h3>Out of Stock</h3>
+            <span id="metric-out-of-stock" class="metric-val">0</span>
+          </div>
+          <div class="metric-icon">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+          </div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-info">
+            <h3>Total Catalog Value</h3>
+            <span id="metric-total-value" class="metric-val">$0.00</span>
+          </div>
+          <div class="metric-icon">
+            <i class="fa-solid fa-sack-dollar"></i>
+          </div>
+        </div>
+      </section>
+
+      <!-- Inventory Table -->
+      <section class="admin-table-container">
+        <table class="admin-table">
+          <thead>
+            <tr>
+              <th>Book Title & Author</th>
+              <th>Category</th>
+              <th>Unit Price</th>
+              <th>Current Stock</th>
+              <th style="width: 100px; text-align: center;">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="admin-inventory-list">
+            <!-- Dynamic Admin Table rows injected here -->
+          </tbody>
+        </table>
+      </section>
+    </main>
+
+    <!-- Admin Footer -->
+    <footer style="background-color: #0f172a; border-color: #1e293b;">
+      <div class="footer-content">
+        <span class="footer-logo" style="background: linear-gradient(135deg, #a855f7, #ec4899); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"><i class="fa-solid fa-book-open-reader"></i> NovelNest Admin</span>
+        <p class="footer-text" style="color: #64748b;">&copy; 2026 NovelNest Administrative Portal. Secured access session active.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- ================= MODALS & DRAWER ================= -->
+
+  <!-- Cart Sidebar/Drawer -->
+  <div id="cart-drawer" class="cart-drawer">
+    <div class="cart-header">
+      <h2><i class="fa-solid fa-cart-shopping"></i> Your Cart</h2>
+      <button id="close-cart-btn" class="close-btn"><i class="fa-solid fa-xmark"></i></button>
+    </div>
+    <div id="cart-items" class="cart-items">
+      <!-- Dynamic Cart Items injected here -->
+    </div>
+    <div class="cart-footer">
+      <div class="cart-totals">
+        <div class="total-row">
+          <span>Subtotal</span>
+          <span id="cart-subtotal">$0.00</span>
+        </div>
+        <div class="total-row">
+          <span>Shipping (Express)</span>
+          <span id="cart-shipping">$0.00</span>
+        </div>
+        <div class="total-row grand-total">
+          <span>Grand Total</span>
+          <span id="cart-grand-total">$0.00</span>
+        </div>
+      </div>
+      <button id="checkout-trigger-btn" class="checkout-btn" disabled>
+        Proceed to Checkout <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Modal Backdrop Overlay -->
+  <div id="modal-overlay" class="modal-overlay"></div>
+
+  <!-- Book Details Modal -->
+  <div id="details-modal" class="modal">
+    <button id="close-details-btn" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+    <div class="details-grid" id="details-modal-content">
+      <!-- Dynamic details content injected here -->
+    </div>
+  </div>
+
+  <!-- Checkout Wizard Modal -->
+  <div id="checkout-modal" class="modal checkout-modal">
+    <button id="close-checkout-btn" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+    
+    <div class="checkout-steps">
+      <div class="step active" id="step-header-1">
+        <span class="step-num">1</span> Delivery
+      </div>
+      <div class="step" id="step-header-2">
+        <span class="step-num">2</span> Payment
+      </div>
+      <div class="step" id="step-header-3">
+        <span class="step-num">3</span> Complete
+      </div>
+    </div>
+
+    <form id="checkout-form">
+      <div class="checkout-body">
+        
+        <!-- Step 1: Shipping Address -->
+        <div class="checkout-step-content active" id="checkout-step-1">
+          <div class="form-group">
+            <label for="checkout-name">Full Name</label>
+            <input type="text" id="checkout-name" class="form-control" placeholder="Enter your full name" required>
+          </div>
+          <div class="form-group">
+            <label for="checkout-email">Email Address</label>
+            <input type="email" id="checkout-email" class="form-control" placeholder="name@example.com" required>
+          </div>
+          <div class="form-group">
+            <label for="checkout-address">Delivery Address</label>
+            <input type="text" id="checkout-address" class="form-control" placeholder="Street address, City, Region" required>
+          </div>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="checkout-phone">Phone Number</label>
+              <input type="tel" id="checkout-phone" class="form-control" placeholder="e.g. +233 24 123 4567" required>
+            </div>
+            <div class="form-group">
+              <label for="checkout-notes">Order Notes (Optional)</label>
+              <input type="text" id="checkout-notes" class="form-control" placeholder="e.g. Leave with gatekeeper">
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 2: Payment -->
+        <div class="checkout-step-content" id="checkout-step-2">
+          <div class="form-group">
+            <label>Select Payment Method</label>
+            <div class="payment-tabs">
+              <div class="payment-tab active" id="pay-momo-tab">
+                <i class="fa-solid fa-mobile-screen-button"></i>
+                <span>Mobile Money (MoMo)</span>
+              </div>
+              <div class="payment-tab" id="pay-bank-tab">
+                <i class="fa-solid fa-building-columns"></i>
+                <span>Bank Transfer</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- MoMo Content -->
+          <div class="payment-details-panel active" id="momo-details-panel">
+            <div class="form-group">
+              <label for="momo-provider">Network Provider</label>
+              <select id="momo-provider" class="form-control">
+                <option value="mtn">MTN Mobile Money</option>
+                <option value="telecel">Telecel Cash</option>
+                <option value="at">AT Money</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="momo-number">Mobile Money Number</label>
+              <input type="tel" id="momo-number" class="form-control" placeholder="e.g. 0541234567">
+            </div>
+            <div style="font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.5rem; margin-top: 1rem;">
+              <i class="fa-solid fa-shield-halved" style="color: var(--accent);"></i>
+              <span>You will receive a prompt on your phone to approve the transaction.</span>
+            </div>
+          </div>
+
+          <!-- Bank Transfer Content -->
+          <div class="payment-details-panel" id="bank-details-panel">
+            <div class="bank-info-box">
+              <div class="bank-info-row">
+                <span>Bank Name:</span>
+                <span>Standard Chartered Bank</span>
+              </div>
+              <div class="bank-info-row">
+                <span>Account Name:</span>
+                <span>NovelNest Publications Ltd</span>
+              </div>
+              <div class="bank-info-row">
+                <span>Account Number:</span>
+                <span>0100123456700</span>
+              </div>
+              <div class="bank-info-row">
+                <span>Branch:</span>
+                <span>Head Office, Accra</span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="bank-depositor">Depositor's Name</label>
+              <input type="text" id="bank-depositor" class="form-control" placeholder="Name on bank transfer receipt">
+            </div>
+            <div class="form-group">
+              <label for="bank-ref">Transaction Reference / ID</label>
+              <input type="text" id="bank-ref" class="form-control" placeholder="e.g. TXN987654321">
+            </div>
+            <div class="form-group">
+              <label>Upload Transfer Receipt (Optional)</label>
+              <label class="receipt-upload-label" id="receipt-upload-btn">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span id="receipt-upload-text">Click to upload receipt image/PDF</span>
+                <input type="file" id="bank-receipt" accept="image/*,application/pdf" style="display:none;">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Success Confirmation -->
+        <div class="checkout-step-content" id="checkout-step-3">
+          <div class="success-screen">
+            <div class="success-icon">
+              <i class="fa-solid fa-check"></i>
+            </div>
+            <h3>Thank You!</h3>
+            <p>Your order has been received and is being processed.</p>
+            
+            <div class="order-receipt-summary">
+              <div class="summary-row">
+                <span>Order Reference:</span>
+                <span id="summary-ref">#NN-89241</span>
+              </div>
+              <div class="summary-row">
+                <span>Payment Method:</span>
+                <span id="summary-payment">Mobile Money</span>
+              </div>
+              <div class="summary-row">
+                <span>Total Amount Paid:</span>
+                <span id="summary-total">$0.00</span>
+              </div>
+              <div class="summary-row">
+                <span>Delivery Address:</span>
+                <span id="summary-address">Accra, Ghana</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="checkout-footer" id="checkout-actions">
+        <button type="button" id="prev-step-btn" class="modal-btn btn-secondary" style="visibility: hidden;">
+          <i class="fa-solid fa-chevron-left"></i> Back
+        </button>
+        <button type="button" id="next-step-btn" class="modal-btn btn-primary">
+          Continue to Payment <i class="fa-solid fa-chevron-right"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Admin Add Book Modal -->
+  <div id="admin-add-book-modal" class="modal" style="max-width: 500px;">
+    <button id="close-add-book-btn" class="modal-close"><i class="fa-solid fa-xmark"></i></button>
+    <div style="padding: 2rem;">
+      <h2 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 1.25rem; display: flex; align-items: center; gap: 0.5rem;">
+        <i class="fa-solid fa-book-medical" style="color: var(--primary);"></i> Add Book to Catalog
+      </h2>
+      <form id="admin-add-book-form">
+        <div class="form-group">
+          <label for="add-book-title">Book Title</label>
+          <input type="text" id="add-book-title" class="form-control" placeholder="e.g. Clean Architecture" required>
+        </div>
+        <div class="form-group">
+          <label for="add-book-author">Author Name</label>
+          <input type="text" id="add-book-author" class="form-control" placeholder="e.g. Robert C. Martin" required>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="add-book-category">Category</label>
+            <select id="add-book-category" class="form-control" required>
+              <option value="fiction">Fiction & Literature</option>
+              <option value="tech">Technology</option>
+              <option value="business">Business & Finance</option>
+              <option value="self-help">Self-Improvement</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="add-book-published">Published Year</label>
+            <input type="number" id="add-book-published" class="form-control" placeholder="2024" min="1800" max="2026" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="add-book-price">Price ($)</label>
+            <input type="number" id="add-book-price" class="form-control" placeholder="19.99" step="0.01" min="0.01" required>
+          </div>
+          <div class="form-group">
+            <label for="add-book-stock">Initial Stock</label>
+            <input type="number" id="add-book-stock" class="form-control" placeholder="10" min="0" required>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="add-book-desc">Description</label>
+          <textarea id="add-book-desc" class="form-control" placeholder="Brief synopsis or details about the book..." rows="3" required style="resize: none;"></textarea>
+        </div>
+        
+        <!-- Gradient Cover Selection -->
+        <div class="form-group">
+          <label>Book Cover Color Theme</label>
+          <div class="color-presets" id="cover-presets-list">
+            <!-- Programmatically active theme presets -->
+          </div>
+          <input type="hidden" id="add-book-gradient-val" value="">
+        </div>
+
+        <button type="submit" class="login-btn" style="margin-top: 1rem;">
+          <i class="fa-solid fa-plus"></i> Add to Database
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Notification Toast Area -->
+  <div id="notification-container" class="notification-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/books.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
