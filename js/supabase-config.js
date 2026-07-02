@@ -4,8 +4,8 @@
 // Copy and paste your project values from:
 // Supabase Console -> Project Settings -> API
 // ==========================================
-const SUPABASE_URL = ""; 
-const SUPABASE_KEY = ""; 
+const SUPABASE_URL = "https://wuarjxehdxndkgsncsca.supabase.co";
+const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind1YXJqeGVoZHhuZGtnc25jc2NhIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI5OTUxMzgsImV4cCI6MjA5ODU3MTEzOH0.rVdR4auXFSG3xKf9-ZuHlu5zrade8XT_ceXTAm1ZIgo";
 
 let supabaseClient = null;
 
@@ -18,13 +18,13 @@ if (hasSupabaseConfig) {
   console.log("Supabase Online Database connected successfully.");
 } else {
   console.warn("Supabase Config keys are empty. Initialising local database simulation (Mockup Mode).");
-  
+
   // ==========================================
   // LOCAL STORAGE MOCK DATABASE FALLBACK ENGINE
   // ==========================================
   // This simulates the Supabase client-side API so the application continues
   // to run locally and offline if keys are not provided.
-  
+
   // Seed local mockup database if needed
   if (!localStorage.getItem('novelnest_books')) {
     localStorage.setItem('novelnest_books', JSON.stringify([
@@ -51,7 +51,7 @@ if (hasSupabaseConfig) {
         const username = email.split('@')[0];
         const role = email.toLowerCase().includes('admin') ? 'admin' : 'customer';
         const user = { id: Math.random().toString(36).substring(2), email, username, role };
-        
+
         // Save mockup users
         let mockUsers = JSON.parse(localStorage.getItem('novelnest_mock_users')) || [];
         if (mockUsers.find(u => u.email === email)) {
@@ -67,7 +67,7 @@ if (hasSupabaseConfig) {
         }
         return { data: { user }, error: null };
       },
-      
+
       signInWithPassword: async ({ email, password }) => {
         // Hardcoded account credentials check first
         if (email === 'admin@novelnest.com' || (email === 'admin' && password === 'admin123')) {
@@ -153,20 +153,20 @@ if (hasSupabaseConfig) {
         filterField: null,
         filterValue: null,
 
-        select: function() {
+        select: function () {
           return this;
         },
 
-        eq: function(field, value) {
+        eq: function (field, value) {
           this.filterField = field;
           this.filterValue = value;
           return this;
         },
 
-        insert: async function(rows) {
+        insert: async function (rows) {
           let current = getMockData();
           let newRows = Array.isArray(rows) ? rows : [rows];
-          
+
           // Generate IDs
           newRows = newRows.map(r => {
             if (!r.id) r.id = Math.floor(Math.random() * 1000000);
@@ -179,7 +179,7 @@ if (hasSupabaseConfig) {
           return { data: newRows, error: null };
         },
 
-        update: async function(changes) {
+        update: async function (changes) {
           let current = getMockData();
           let updated = current.map(item => {
             if (this.filterField && item[this.filterField] == this.filterValue) {
@@ -191,7 +191,7 @@ if (hasSupabaseConfig) {
           return { data: changes, error: null };
         },
 
-        delete: async function() {
+        delete: async function () {
           let current = getMockData();
           let filtered = current.filter(item => {
             if (this.filterField && item[this.filterField] == this.filterValue) {
@@ -204,7 +204,7 @@ if (hasSupabaseConfig) {
         },
 
         // Final execution resolve
-        then: function(resolve) {
+        then: function (resolve) {
           let data = getMockData();
           if (this.filterField) {
             data = data.filter(item => item[this.filterField] == this.filterValue);
